@@ -1,10 +1,9 @@
-﻿namespace QRCodeApp
+﻿namespace QRCodeApp;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -3,12 +3,37 @@
     x:Class="QRCodeApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:QRCodeApp"
-    Title="QRCodeApp">
+    xmlns:pages="clr-namespace:QRCodeApp"
+    Shell.NavBarIsVisible="False">
 
+<TabBar>
+
+        <!-- Generate Tab -->
+        <ShellContent
+            Title="Generate"
+            ContentTemplate="{DataTemplate pages:GeneratorPage}"
+            Route="GeneratorPage">
+            <ShellContent.Icon>
+                <FontImageSource
+                    FontFamily="OpenSansRegular"
+                    Glyph="&#xe145;"
+                    Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <!-- Scan Tab -->
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+            Title="Scan"
+            ContentTemplate="{DataTemplate pages:ScannerPage}"
+            Route="ScannerPage">
+            <ShellContent.Icon>
+                <FontImageSource
+                    FontFamily="OpenSansRegular"
+                    Glyph="&#xe410;"
+                    Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+    </TabBar>
 
 </Shell>

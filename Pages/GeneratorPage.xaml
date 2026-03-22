@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="QRCodeApp.GeneratorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+    Title="Generate QR Code"
+    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,40,24,24" Spacing="20">
+
+            <!-- Header -->
+            <Label
+                FontAttributes="Bold"
+                FontSize="28"
+                HorizontalOptions="Center"
+                Text="QR Generator"
+                TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+
+            <Label
+                FontSize="14"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Type any text or URL below and tap Generate."
+                TextColor="{AppThemeBinding Light=#555555, Dark=#AAAAAA}" />
+
+            <!-- Input -->
+            <Frame
+                Padding="0"
+                BackgroundColor="Transparent"
+                BorderColor="{AppThemeBinding Light=#DDDDDD, Dark=#333333}"
+                CornerRadius="12"
+                HasShadow="False">
+                <Entry
+                    x:Name="InputEntry"
+                    FontSize="16"
+                    Placeholder="e.g. https://example.com"
+                    PlaceholderColor="{AppThemeBinding Light=#AAAAAA, Dark=#555555}"
+                    ReturnType="Done"
+                    Text="{Binding InputText}"
+                    TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+                    Margin="12,0" />
+            </Frame>
+
+            <!-- Buttons -->
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+
+                <Button
+                    Grid.Column="0"
+                    BackgroundColor="{StaticResource Primary}"
+                    Command="{Binding GenerateCommand}"
+                    CornerRadius="12"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HeightRequest="52"
+                    Text="Generate"
+                    TextColor="White" />
+
+                <Button
+                    Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    BorderColor="{AppThemeBinding Light=#DDDDDD, Dark=#333333}"
+                    BorderWidth="1"
+                    Command="{Binding ClearCommand}"
+                    CornerRadius="12"
+                    FontSize="14"
+                    HeightRequest="52"
+                    Text="Clear"
+                    TextColor="{AppThemeBinding Light=#555555, Dark=#AAAAAA}"
+                    WidthRequest="80" />
+
+            </Grid>
+
+            <!-- QR Code Display -->
+            <Frame
+                Padding="20"
+                BackgroundColor="White"
+                BorderColor="Transparent"
+                CornerRadius="16"
+                HasShadow="True"
+                HorizontalOptions="Center"
+                IsVisible="{Binding ShowQr}"
+                WidthRequest="260">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <zxing:BarcodeGeneratorView
+                        x:Name="BarcodeView"
+                        HeightRequest="220"
+                        Value="{Binding QrValue}"
+                        WidthRequest="220"
+                        HorizontalOptions="Center">
+                        <zxing:BarcodeGeneratorView.Options>
+                            <zxing:BarcodeGeneratorOptions
+                                ForegroundColor="Black"
+                                Width="220"
+                                Height="220" />
+                        </zxing:BarcodeGeneratorView.Options>
+                    </zxing:BarcodeGeneratorView>
+
+                    <Label
+                        FontSize="12"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        MaxLines="2"
+                        LineBreakMode="TailTruncation"
+                        Text="{Binding QrValue}"
+                        TextColor="#555555" />
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

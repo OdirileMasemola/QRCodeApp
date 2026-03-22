@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="QRCodeApp.ScannerPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+    Title="Scan QR Code"
+    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <!-- Camera View (full screen) -->
+        <zxing:CameraBarcodeReaderView
+            x:Name="BarcodeReaderView"
+            Grid.Row="0"
+            BarcodesDetected="OnBarcodesDetected"
+            IsDetecting="{Binding IsScannerOn}">
+            <zxing:CameraBarcodeReaderView.Options>
+                <zxing:BarcodeReaderOptions
+                    AutoRotate="True"
+                    Multiple="False"
+                    TryHarder="True" />
+            </zxing:CameraBarcodeReaderView.Options>
+        </zxing:CameraBarcodeReaderView>
+
+        <!-- Scan Frame Overlay -->
+        <BoxView
+            Grid.Row="0"
+            BackgroundColor="Transparent"
+            HeightRequest="240"
+            HorizontalOptions="Center"
+            Stroke="#FFFFFF"
+            StrokeThickness="3"
+            VerticalOptions="Center"
+            WidthRequest="240">
+            <BoxView.Shadow>
+                <Shadow Brush="Black" Opacity="0.4" Radius="10" />
+            </BoxView.Shadow>
+        </BoxView>
+
+        <!-- Hint text -->
+        <Label
+            Grid.Row="0"
+            FontSize="14"
+            HorizontalOptions="Center"
+            Margin="0,0,0,80"
+            Text="Align a QR code inside the frame"
+            TextColor="White"
+            VerticalOptions="End" />
+
+        <!-- Result Panel -->
+        <Frame
+            Grid.Row="1"
+            Padding="20"
+            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark=#1C1C1E}"
+            BorderColor="Transparent"
+            CornerRadius="0"
+            HasShadow="True"
+            IsVisible="{Binding HasResult}">
+
+            <VerticalStackLayout Spacing="16">
+
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="13"
+                    Text="SCANNED RESULT"
+                    TextColor="{AppThemeBinding Light=#888888, Dark=#888888}" />
+
+                <Label
+                    FontSize="16"
+                    LineBreakMode="WordWrap"
+                    Text="{Binding ScanResult}"
+                    TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+
+                <!-- URL badge — only visible when result is a link -->
+                <Frame
+                    Padding="8,4"
+                    BackgroundColor="#E8F5E9"
+                    BorderColor="Transparent"
+                    CornerRadius="6"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding IsUrl}">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="12"
+                        Text="URL detected"
+                        TextColor="#2E7D32" />
+                </Frame>
+
+                <!-- Open in Browser button — only shown when result is a URL -->
+                <Button
+                    BackgroundColor="#34A853"
+                    Command="{Binding OpenInBrowserCommand}"
+                    CornerRadius="12"
+                    FontAttributes="Bold"
+                    HeightRequest="48"
+                    IsVisible="{Binding IsUrl}"
+                    Text="Open in Browser"
+                    TextColor="White" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+
+                    <Button
+                        Grid.Column="0"
+                        BackgroundColor="{StaticResource Primary}"
+                        Command="{Binding CopyCommand}"
+                        CornerRadius="12"
+                        FontAttributes="Bold"
+                        HeightRequest="48"
+                        Text="Copy"
+                        TextColor="White" />
+
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        BorderColor="{AppThemeBinding Light=#DDDDDD, Dark=#333333}"
+                        BorderWidth="1"
+                        Command="{Binding ScanAgainCommand}"
+                        CornerRadius="12"
+                        HeightRequest="48"
+                        Text="Scan Again"
+                        TextColor="{AppThemeBinding Light=#555555, Dark=#AAAAAA}" />
+
+                </Grid>
+
+            </VerticalStackLayout>
+
+        </Frame>
+
+    </Grid>
+
+</ContentPage>

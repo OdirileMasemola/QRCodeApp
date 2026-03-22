@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using QRCodeApp.ViewModels;
 
-namespace QRCodeApp.Pages
+namespace QRCodeApp;
+
+public partial class GeneratorPage : ContentPage
 {
-    internal class GeneratorPage
+    public GeneratorPage(GeneratorViewModel viewModel)
     {
+        InitializeComponent();
+        BindingContext = viewModel;
     }
 }
