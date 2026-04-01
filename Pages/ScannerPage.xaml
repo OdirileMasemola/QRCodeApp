@@ -9,7 +9,7 @@
 
     <Grid RowDefinitions="*,Auto">
 
-        <!-- Camera View (full screen) -->
+        <!-- Camera View -->
         <zxing:CameraBarcodeReaderView
             x:Name="BarcodeReaderView"
             Grid.Row="0"
